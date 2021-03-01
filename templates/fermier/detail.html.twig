@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ fermier.prenom }} le Fermier{% endblock %}
+
+{% block body %}
+    <div>
+        <h2>{{ fermier.prenom }}</h2>
+
+        <p>
+            {{ fermier.poulets.count }} poulet(s) à son actif
+        </p>
+        <h2>Ses poulets</h2>
+        {% include('poulet/_list.html.twig') %}
+    </div>
+{% endblock %}

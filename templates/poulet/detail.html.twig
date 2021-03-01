@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ poulet.getPrenom() }} le Poulet{% endblock %}
+
+{% block body %}
+    <div>
+        <h1>{{ poulet.getPrenom() }}</h1>
+        <p> Race : {{ poulet.getRace() }} <br>
+            Age : {{ poulet.getAge() }} <br>
+            Sexe : {{ poulet.getSexe() }}<br>
+            Couleur: {{ poulet.getCouleur() }}
+        </p>
+
+        <h2>Qui est <u>{{ poulet.getPrenom() }}</u> ?</h2>
+        <p>{{ poulet.getDescription() }}</p>
+
+        <div>
+            <h3>Le fermier</h3>
+            <p>
+                {{ poulet.getFermier().getPrenom() }} {{ poulet.getFermier().getNom() }}
+            </p>
+            {% if nombreFreres > 0 %}
+                <a href="">Voir ses {{ nombreFreres }} autres Poulets</a>
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock %}

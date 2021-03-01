@@ -1,0 +1,5 @@
+<ul>
+    {% for poulet in pouletList %}
+        <li><a href="/poulet/{{ poulet.getPrenom() }}">{{ poulet.getPrenom() }}</a></li>
+    {% endfor %}
+</ul>

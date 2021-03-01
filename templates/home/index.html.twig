@@ -4,10 +4,10 @@
 
 {% block body %}
     <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
-        {% if nombre is defined %}
-            <h2>Vous avez {{ nombre }} trucs dans votre poche</h2>
-        {% endif %}
+        <h2>Nos poulets</h2>
+        {% include("poulet/_list.html.twig") %}
+        <h2>Nos fermiers</h2>
+        {% include("fermier/_list.html.twig") %}
     </div>
 {% endblock %}
 

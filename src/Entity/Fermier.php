@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,6 +57,18 @@ class Fermier
      * @ORM\Column(name="password", type="string", length=50, nullable=false)
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Poulet::class, mappedBy="fermier")
+     */
+    private $poulets;
+
+    public function __construct()
+    {
+        $this->poulets = new ArrayCollection();
+    }
+  
+    
 
     public function getId(): ?int
     {
@@ -117,6 +131,36 @@ class Fermier
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Poulet[]
+     */
+    public function getPoulets(): Collection
+    {
+        return $this->poulets;
+    }
+
+    public function addPoulet(Poulet $poulet): self
+    {
+        if (!$this->poulets->contains($poulet)) {
+            $this->poulets[] = $poulet;
+            $poulet->setMonFermier($this);
+        }
+
+        return $this;
+    }
+
+    public function removePoulet(Poulet $poulet): self
+    {
+        if ($this->poulets->removeElement($poulet)) {
+            // set the owning side to null (unless already changed)
+            if ($poulet->getMonFermier() === $this) {
+                $poulet->setMonFermier(null);
+            }
+        }
 
         return $this;
     }

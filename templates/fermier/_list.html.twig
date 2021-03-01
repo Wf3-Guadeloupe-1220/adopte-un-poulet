@@ -1,0 +1,5 @@
+<ul>
+    {% for fermier in fermierList %}
+        <li><a href="{{ path('fermierDetail', {name: fermier.prenom}) }}">{{ fermier.getPrenom() }} {{ fermier.getNom() }}</a></li>
+    {% endfor %}
+</ul>
