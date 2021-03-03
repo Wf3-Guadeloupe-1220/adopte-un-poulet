@@ -166,17 +166,5 @@
                   			
                   			return $this;
                   		}
-            
-                    public function getMonFermier(): ?Fermier
-                    {
-                        return $this->monFermier;
-                    }
-         
-                    public function setMonFermier(?Fermier $monFermier): self
-                    {
-                        $this->monFermier = $monFermier;
-         
-                        return $this;
-                    }
                   		
                   	}

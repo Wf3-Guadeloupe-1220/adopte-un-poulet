@@ -20,9 +20,26 @@
                 {{ poulet.getFermier().getPrenom() }} {{ poulet.getFermier().getNom() }}
             </p>
             {% if nombreFreres > 0 %}
-                <a href="">Voir ses {{ nombreFreres }} autres Poulets</a>
+                <a href="{{ path('fermierDetail', {name: poulet.fermier.prenom}) }}">Voir ses {{ nombreFreres }} autres Poulets</a>
             {% endif %}
         </div>
 
+        <div>
+            {% if poulet.famille is not null %}
+                {{ poulet.prenom }} à été adopté par une famille aimante
+                <br>
+                Merci <b>{{ poulet.famille.prenom }}</b>
+            {% else %}
+                <h2>Adopter {{ poulet.prenom }}</h2>
+                {% if app.user is null %}
+                    <p>Envie d'adopter ? <a href="{{ path('app_login') }}">Connectez-vous</a></p>
+                {% else %}
+                    {{ form_start(form) }}
+                        {{ form_row(form.montantMensuel) }}
+                        <button type="submit">J'adopte</button>
+                    {{ form_end(form) }}
+                {% endif %}
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

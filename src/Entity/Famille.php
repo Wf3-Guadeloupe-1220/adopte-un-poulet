@@ -115,8 +115,8 @@
 			return $this->montantMensuel;
 		}
 		
-		public function setMontantMensuel(int $montantMensuel): self {
-			$this->montantMensuel = $montantMensuel;
+		public function setMontantMensuel(int $montant): self {
+			$this->montantMensuel += $montant;
 			
 			return $this;
 		}
