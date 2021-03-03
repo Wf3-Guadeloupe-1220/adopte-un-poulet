@@ -2,6 +2,7 @@
 	
 	namespace App\Controller;
 	
+	use App\Entity\Adoption;
 	use App\Entity\Poulet;
 	use App\Form\AdoptionType;
 	use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,8 +38,18 @@
 			// Récupère le nombre de poulets de notre fermier
 			$autresPoulets = $poulet->getFermier()->getPoulets();
 			
+			// on récupère l'objet adoption de notre poulet
+			$adoption = $poulet->getAdoption();
+		
+			//si l'objet est null on crée un nouvel objet adoption
+			if($adoption === null){
+				$adoption = new Adoption();
+				// on attribue le poulet actuel a cette nouvelle adoption
+				$adoption->setPoulet($poulet);
+			}
+			
 			//créer notre formulaire d'adoption
-			$form = $this->createForm(AdoptionType::class, $this->getUser());
+			$form = $this->createForm(AdoptionType::class, $adoption);
 			
 			//traiter la validation du formulaire
 			$form->handleRequest($request);
@@ -48,13 +59,15 @@
 				//récupère le manager (entité symfony qui execute les requetes BDD)
 				$manager = $this->getDoctrine()->getManager();
 				
-				//attribue l'utilisateur actuel en tant que Famille du poulet
-				$poulet->setFamille($this->getUser());
-				//dis à doctrine de mettre à jour notre Parent dans la base
-				$manager->persist($this->getUser());
-				//dis à doctrine d'enregistrer notre poulet dans la base
-				$manager->persist($poulet);
-				//execute les requetes en attente
+				//attribue l'utilisateur actuel en tant que Famille du poulet dans l'objet ADOPTION
+				$adoption->setFamille($this->getUser());
+				//attribue la date actuelle a notre objet adoption
+				$adoption->setDate(new \DateTime());
+				
+				//dis à doctrine d'enregistrer notre adoption dans la base
+				$manager->persist($adoption);
+				
+				//execute la requete en attente
 				$manager->flush();
 			}
 			

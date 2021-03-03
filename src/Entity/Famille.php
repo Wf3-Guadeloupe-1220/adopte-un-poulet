@@ -52,19 +52,12 @@
 		private $password;
 		
 		/**
-		 * @var int
-		 *
-		 * @ORM\Column(name="montant_mensuel", type="integer", nullable=false)
+		 * @ORM\OneToMany(targetEntity=Adoption::class, mappedBy="famille")
 		 */
-		private $montantMensuel;
-		
-		/**
-		 * @ORM\OneToMany(targetEntity=Poulet::class, mappedBy="maFamille")
-		 */
-		private $pouletsAdoptes;
+		private $adoptionList;
 		
 		public function __construct() {
-			$this->pouletsAdoptes = new ArrayCollection();
+			$this->adoptionList = new ArrayCollection();
 		}
 		
 		public function getId(): ?int {
@@ -110,44 +103,7 @@
 			
 			return $this;
 		}
-		
-		public function getMontantMensuel(): ?int {
-			return $this->montantMensuel;
-		}
-		
-		public function setMontantMensuel(int $montant): self {
-			$this->montantMensuel += $montant;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return Collection|Poulet[]
-		 */
-		public function getPouletsAdoptes(): Collection {
-			return $this->pouletsAdoptes;
-		}
-		
-		public function addPouletsAdopte(Poulet $pouletsAdopte): self {
-			if (!$this->pouletsAdoptes->contains($pouletsAdopte)) {
-				$this->pouletsAdoptes[] = $pouletsAdopte;
-				$pouletsAdopte->setFamille($this);
-			}
-			
-			return $this;
-		}
-		
-		public function removePouletsAdopte(Poulet $pouletsAdopte): self {
-			if ($this->pouletsAdoptes->removeElement($pouletsAdopte)) {
-				// set the owning side to null (unless already changed)
-				if ($pouletsAdopte->getFamille() === $this) {
-					$pouletsAdopte->setFamille(null);
-				}
-			}
-			
-			return $this;
-		}
-		
+	
 		public function getRoles() {
 			$roles[] = 'ROLE_USER';
 			return array_unique($roles);
@@ -163,5 +119,32 @@
 		
 		public function eraseCredentials() {
 			// TODO: Implement eraseCredentials() method.
+		}
+		
+		/**
+		 * @return Collection|Adoption[]
+		 */
+		public function getAdoptionList(): Collection {
+			return $this->adoptionList;
+		}
+		
+		public function addAdoptionList(Adoption $adoptionList): self {
+			if (!$this->adoptionList->contains($adoptionList)) {
+				$this->adoptionList[] = $adoptionList;
+				$adoptionList->setFamille($this);
+			}
+			
+			return $this;
+		}
+		
+		public function removeAdoptionList(Adoption $adoptionList): self {
+			if ($this->adoptionList->removeElement($adoptionList)) {
+				// set the owning side to null (unless already changed)
+				if ($adoptionList->getFamille() === $this) {
+					$adoptionList->setFamille(null);
+				}
+			}
+			
+			return $this;
 		}
 	}

@@ -25,10 +25,10 @@
         </div>
 
         <div>
-            {% if poulet.famille is not null %}
+            {% if poulet.adoption is not null %}
                 {{ poulet.prenom }} à été adopté par une famille aimante
                 <br>
-                Merci <b>{{ poulet.famille.prenom }}</b>
+                Merci <b>{{ poulet.adoption.famille.prenom }}</b>
             {% else %}
                 <h2>Adopter {{ poulet.prenom }}</h2>
                 {% if app.user is null %}
